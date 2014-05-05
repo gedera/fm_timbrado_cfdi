@@ -38,7 +38,7 @@ module FmTimbradoCfdi
     end
 
     def cancelar(rfc, uuid, opciones = {})
-      respuesta = webservice_call(:request_cancelar_cfdi, rfc, {uuid: uuid}.merge(opciones))
+      respuesta = webservice_call(:request_cancelar_cfdi, rfc, {:uuid => uuid}.merge(opciones))
       FmRespuestaCancelacion.new(respuesta)
     end
 
@@ -49,18 +49,18 @@ module FmTimbradoCfdi
       configurar_cliente
       parametros= { "param0" => { "UserPass" => user_pass, "UserID" => user_id, "emisorRFC" => rfc }.merge(opciones) }
       @client.call(accion,
-                   message: parametros
+                   :message => parametros
                    )
     end
 
     def configurar_cliente
       @client  = Savon.client(
-        ssl_verify_mode: ssl_verify_mode,
-        wsdl: fm_wsdl,
-        endpoint: endpoint,
-        raise_errors: false,
-        log_level: log_level,
-        log: log
+        :ssl_verify_mode => ssl_verify_mode,
+        :wsdl => fm_wsdl,
+        :endpoint => endpoint,
+        :raise_errors => false,
+        :log_level => log_level,
+        :log => log
       )
     end
 
